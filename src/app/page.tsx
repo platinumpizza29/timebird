@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import HeroSectionComp from "~/components/landing/herosection";
 import NavbarComp from "~/components/navbarComp";
 
 export default async function App() {
@@ -10,7 +11,7 @@ export default async function App() {
   return (
     <main className="">
       <NavbarComp />
-      <h1>Hello World</h1>
+      <HeroSectionComp />
     </main>
   );
 }
