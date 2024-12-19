@@ -11,6 +11,8 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+// TODO: seperate the overtime hours and basic hours also add a department section
+
 model TimeEntry {
   id          Int      @id @default(autoincrement())
   clerkId     String // Store Clerk's unique user ID here

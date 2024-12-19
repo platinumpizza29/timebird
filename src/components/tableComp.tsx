@@ -1,4 +1,11 @@
+import getWeeklyEntries from "~/server/timeEntry";
+import User from "~/server/user";
+import { type timeEntrySchema } from "~/types/weeklyEntryTypes";
+
 export default async function TableComp() {
+  const user = await User();
+  const userId = user.id
+  const data = await getWeeklyEntries(userId) as timeEntrySchema[];
   return (
     <div className="overflow-auto">
       <h1 className="text-4xl">My Hours</h1>
@@ -7,33 +14,24 @@ export default async function TableComp() {
         <thead>
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
+            <th>Hourly Rate</th>
+            <th>Hours Worked</th>
+            <th>Date</th>
+            {/*<th>Department</th>*/}
           </tr>
         </thead>
         <tbody>
           {/* row 1 */}
-          <tr>
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Blue</td>
-          </tr>
+          {data.map((item, index) => (
+            <tr key={index}>
+              <th>{index}</th>
+              <td>{item.hourlyRate}</td>
+              <td>{item.hoursWorked}</td>
+              <td>{item.createdAt.toISOString()}</td>
+            </tr>
+          ))}
+
           {/* row 2 */}
-          <tr>
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>Desktop Support Technician</td>
-            <td>Purple</td>
-          </tr>
-          {/* row 3 */}
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>Tax Accountant</td>
-            <td>Red</td>
-          </tr>
         </tbody>
       </table>
     </div>
