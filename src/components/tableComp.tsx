@@ -27,7 +27,7 @@ export default async function TableComp() {
               <th>{index}</th>
               <td>{item.hourlyRate}</td>
               <td>{item.hoursWorked}</td>
-              <td>{item.createdAt.toISOString()}</td>
+              <td>{item.createdAt.toISOString().split("T")[0]}</td>
             </tr>
           ))}
 

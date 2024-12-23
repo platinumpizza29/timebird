@@ -129,7 +129,7 @@ export default function Footer() {
             </svg>
 
             <div className="ms-5 border-s border-neutral-700 ps-5">
-              <p className="text-sm text-neutral-400">© 2024 Preline Labs.</p>
+              <p className="text-sm text-neutral-400">© 2024 TimeBird.</p>
             </div>
           </div>
         </div>

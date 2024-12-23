@@ -47,7 +47,7 @@ export default async function HomePage() {
               </Link>
             </li>
             <li className="place-items-stretch hover:text-primary">
-              <Link href={"#"}>
+              <Link href={"/home/myrotas"} prefetch={true}>
                 <Timer />
                 My Rotas
                 <ChevronRight />
