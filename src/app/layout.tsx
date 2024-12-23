@@ -21,10 +21,14 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable}`}>
         <PrelineScript />
-        <Analytics/>
-        <SpeedInsights/>
+
+
         <PostHogProvider>
-          <body>{children}</body>
+          <body>
+          {children}
+          <Analytics/>
+          <SpeedInsights/>
+          </body>
         </PostHogProvider>
       </html>
     </ClerkProvider>
