@@ -4,7 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import PrelineScript from "~/components/PrelineScript";
-import { CSPostHogProvider } from "./providers";
+import { PostHogProvider } from "./providers";
 
 export const metadata: Metadata = {
   title: "TimeBird",
@@ -19,9 +19,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable}`}>
         <PrelineScript />
-        <CSPostHogProvider>
+        <PostHogProvider>
           <body>{children}</body>
-        </CSPostHogProvider>
+        </PostHogProvider>
       </html>
     </ClerkProvider>
   );
