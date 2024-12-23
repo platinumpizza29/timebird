@@ -1,4 +1,4 @@
-import { Calendar1, ChevronRight, PanelLeftOpen } from "lucide-react";
+import { Calendar1, ChevronRight, PanelLeftOpen, Timer } from "lucide-react";
 import Link from "next/link";
 import HomePageComp from "~/components/homeComp";
 import NavbarComp from "~/components/navbarComp";
@@ -33,7 +33,7 @@ export default async function HomePage() {
           <ul className="menu min-h-full w-80 bg-base-200 p-4 text-base-content">
             {/* Sidebar content here */}
             <li className="place-self-stretch hover:text-primary">
-              <Link href={"#"}>
+              <Link href={"/home/weeklysummary"} prefetch={true}>
                 <Calendar1 />
                 Weekly Summary
                 <ChevronRight />
@@ -43,6 +43,13 @@ export default async function HomePage() {
               <Link href={"#"}>
                 <Calendar1 />
                 Monthly Summary
+                <ChevronRight />
+              </Link>
+            </li>
+            <li className="place-items-stretch hover:text-primary">
+              <Link href={"#"}>
+                <Timer />
+                My Rotas
                 <ChevronRight />
               </Link>
             </li>

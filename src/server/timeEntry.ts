@@ -67,3 +67,39 @@ export async function getTotalHours(clerkId: string): Promise<TotalHours> {
     }
   }
 }
+
+export async function logHours(
+  clerkId: string,
+  hourlyRate: number,
+  hours: number,
+) {
+  try {
+    const entry = await db.timeEntry.create({
+      data: {
+        clerkId,
+        hourlyRate,
+        hoursWorked: hours,
+        createdAt: new Date(),
+      },
+    });
+    return entry;
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export default async function getWeeklyEntries(clerkId: string) {
+  try {
+    const data = await db.timeEntry.findMany({
+      where: {
+        clerkId: clerkId
+      }
+    })
+    return data
+  } catch (error) {
+    console.log(error)
+    return "Error while Fetching entries"
+
+  }
+}
