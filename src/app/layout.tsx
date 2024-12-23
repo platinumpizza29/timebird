@@ -5,8 +5,8 @@ import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import PrelineScript from "~/components/PrelineScript";
 import { PostHogProvider } from "./providers";
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "TimeBird",
@@ -21,15 +21,13 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable}`}>
         <PrelineScript />
-
-
-        <PostHogProvider>
-          <body>
-          {children}
-          <Analytics/>
-          <SpeedInsights/>
-          </body>
-        </PostHogProvider>
+        <body>
+          <PostHogProvider>
+            {children}
+            <Analytics />
+            <SpeedInsights />
+          </PostHogProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
