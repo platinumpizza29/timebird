@@ -1,21 +1,21 @@
-import NavbarComp from "~/components/navbarComp"
+import NavbarComp from "~/components/navbarComp";
 
 export default async function WeeklySummary() {
   return (
     <div className="min-h-[100dvh]">
       <NavbarComp />
-      <div className="min-h-[100dvh] mx-4 md:mx-12 space-y-6 lg:mx-24 xl:mx-48">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="card bg-base-100 w-full shadow-xl">
+      <div className="mx-4 min-h-[100dvh] space-y-6 md:mx-12 lg:mx-24 xl:mx-48">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="card w-full bg-base-100 shadow-xl">
             <div className="card-body">
               <h2 className="card-title">Total Hours</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
+              <p>These are the total hours per week</p>
               <div className="card-actions justify-end">
                 <button className="btn btn-primary">Buy Now</button>
               </div>
             </div>
           </div>
-          <div className="card bg-base-100 w-full shadow-xl">
+          <div className="card w-full bg-base-100 shadow-xl">
             <div className="card-body">
               <h2 className="card-title">Expected pay</h2>
               <p>If a dog chews shoes whose shoes does he choose?</p>
@@ -66,5 +66,5 @@ export default async function WeeklySummary() {
         </section>
       </div>
     </div>
-  )
+  );
 }

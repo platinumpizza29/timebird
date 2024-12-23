@@ -1,5 +1,5 @@
 import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
+import theme, { fontFamily } from "tailwindcss/defaultTheme";
 import daisyui from "daisyui";
 import preline from "preline/plugin";
 
@@ -13,5 +13,8 @@ export default {
     },
   },
   darkMode: "class",
+  daisyui: {
+    themes: ["light"],
+  },
   plugins: [daisyui, preline],
 } satisfies Config;
