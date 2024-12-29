@@ -21,13 +21,14 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.9.5",
+    "@clerk/nextjs": "^6.9.6",
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/react": "^6.1.15",
     "@nextui-org/navbar": "^2.2.5",
     "@nextui-org/react": "^2.6.8",
     "@prisma/client": "^6.1.0",
+    "@supabase/supabase-js": "^2.47.10",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",

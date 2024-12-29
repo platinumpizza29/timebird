@@ -13,11 +13,24 @@ datasource db {
 
 // TODO: seperate the overtime hours and basic hours also add a department section
 
+model User {
+  id         String      @id @default(uuid())
+  clerkId    String      @unique
+  email      String
+  name       String
+  hourlyRate Float       @default(0.0)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  TimeEntry  TimeEntry[]
+}
+
 model TimeEntry {
-  id          Int      @id @default(autoincrement())
-  clerkId     String // Store Clerk's unique user ID here
-  hoursWorked Float // Number of hours worked
-  hourlyRate  Float // User's hourly rate for this entry
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              Int      @id @default(autoincrement())
+  contractedHours Float    @default(0.0)
+  overtimeHours   Float    @default(0.0)
+  brakeHours      Float    @default(0.0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  User            User?    @relation(fields: [userId], references: [id])
+  userId          String?
 }

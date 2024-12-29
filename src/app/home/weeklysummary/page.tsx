@@ -1,6 +1,10 @@
 import NavbarComp from "~/components/navbarComp";
+import { getTotalHours } from "~/server/timeEntry";
+import User from "~/server/user";
 
 export default async function WeeklySummary() {
+  const user = await User();
+  const weeklyHours = await getTotalHours(user.id);
   return (
     <div className="min-h-[100dvh]">
       <NavbarComp />
@@ -9,19 +13,17 @@ export default async function WeeklySummary() {
           <div className="card w-full bg-base-100 shadow-xl">
             <div className="card-body">
               <h2 className="card-title">Total Hours</h2>
-              <p>These are the total hours per week</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
+              <p className={"stat-value text-primary"}>
+                {weeklyHours.totalWeeklyHours}
+              </p>
             </div>
           </div>
           <div className="card w-full bg-base-100 shadow-xl">
             <div className="card-body">
               <h2 className="card-title">Expected pay</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
+              <p className={"stat-value text-primary"}>
+                {weeklyHours.totalWeeklyHours * 13.36}
+              </p>
             </div>
           </div>
         </div>

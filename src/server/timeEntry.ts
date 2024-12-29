@@ -6,9 +6,9 @@ interface TotalHours {
   totalMonthlyHours: number;
 }
 
-export async function getTotalHours(clerkId: string): Promise<TotalHours> {
-  if (!clerkId) {
-    throw new Error("Clerk ID is required");
+export async function getTotalHours(userId: string): Promise<TotalHours> {
+  if (!userId) {
+    throw new Error("User ID is required");
   }
 
   const currentDate = new Date();
@@ -21,24 +21,27 @@ export async function getTotalHours(clerkId: string): Promise<TotalHours> {
     // Fetch weekly time entries
     const weeklyEntries = await db.timeEntry.findMany({
       where: {
-        clerkId,
+        userId,
         createdAt: {
           gte: weekStart,
           lte: weekEnd,
         },
       },
+      include: {
+        User: true
+      }
     });
 
     // Sum weekly hours
     const totalWeeklyHours = weeklyEntries.reduce(
-      (total, entry) => total + (entry.hoursWorked || 0),
+      (total, entry) => total + ((entry.contractedHours + entry.overtimeHours) - entry.brakeHours || 0),
       0,
     );
 
     // Fetch monthly time entries
     const monthlyEntries = await db.timeEntry.findMany({
       where: {
-        clerkId,
+        userId,
         createdAt: {
           gte: monthStart,
           lte: monthEnd,
@@ -48,7 +51,7 @@ export async function getTotalHours(clerkId: string): Promise<TotalHours> {
 
     // Sum monthly hours
     const totalMonthlyHours = monthlyEntries.reduce(
-      (total, entry) => total + (entry.hoursWorked || 0),
+      (total, entry) => total + ((entry.contractedHours + entry.overtimeHours) - entry.brakeHours || 0),
       0,
     );
 
@@ -69,16 +72,18 @@ export async function getTotalHours(clerkId: string): Promise<TotalHours> {
 }
 
 export async function logHours(
-  clerkId: string,
-  hourlyRate: number,
-  hours: number,
+  userId: string,
+  contractedHours: number,
+  overtimeHours: number,
+  brakeHours: number
 ) {
   try {
     const entry = await db.timeEntry.create({
       data: {
-        clerkId,
-        hourlyRate,
-        hoursWorked: hours,
+        userId,
+        contractedHours,
+        overtimeHours,
+        brakeHours,
         createdAt: new Date(),
       },
     });
@@ -89,11 +94,11 @@ export async function logHours(
   }
 }
 
-export default async function getWeeklyEntries(clerkId: string) {
+export default async function getWeeklyEntries(userId: string) {
   try {
     const data = await db.timeEntry.findMany({
       where: {
-        clerkId: clerkId
+        userId: userId
       }
     })
     return data
