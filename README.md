@@ -1,30 +1,44 @@
-# Create T3 App
+# TimeBird: Blue-Collar Workforce Management
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=nextdotjs)](https://nextjs.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-5-blue?style=flat-square&logo=prisma)](https://www.prisma.io/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-Latest-gray?style=flat-square)](https://ui.shadcn.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-green?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3-blue?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
 
-## What's next? How do I make an app with this?
+## Overview
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+TimeBird is a modern, user-friendly web application meticulously crafted to streamline time tracking, scheduling, and payroll management for blue-collar workers. Recognizing the unique challenges and needs of this essential workforce, TimeBird is designed to be intuitive, efficient, and empowering.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Built with a cutting-edge technology stack including Next.js 15, Prisma, shadcn/ui, PostgreSQL, and Tailwind CSS, TimeBird offers a seamless and performant experience across devices. More than just a time tracking tool, TimeBird enables workers to take control of their schedules, accurately log their hours, and confidently maximize their earnings – all within a secure and reliable platform.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+We believe that technology should simplify, not complicate. TimeBird is built on that principle, delivering a powerful set of features in an accessible package, designed to make your workday easier and more rewarding.
 
-## Learn More
+**Ready to streamline your time management? Visit TimeBird: [https://v0-timebird.vercel.app/](https://v0-timebird.vercel.app/)**
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Key Features
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- **Secure User Authentication:** Ensures only authorized personnel access their information with reliable login and registration processes.
+- **Flexible Rota Management:** Empowers users to create and manage work rotas tailored to their needs, supporting weekly, bi-weekly, and 4-weekly schedules. Features an intuitive calendar display for easy schedule visualization.
+- **Effortless Overtime Logging:** Simplifies the process of logging overtime hours with detailed descriptions, promoting accurate record-keeping.
+- **Personalized Pay Rate Management:** Allows users to configure their own base and overtime pay rates, while also maintaining a historical record of rate changes for transparency.
+- **Real-Time Earnings Insights:** Provides automated calculations of estimated pay, based on rota, overtime, and user-defined pay rates. Offers clear summaries of hours worked, both regular and overtime.
+- **User-Centric Design:** Eliminates the need for an administrative role, promoting self-management and giving workers direct control over their schedules and earnings information.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Tech Stack
 
-## How do I deploy this?
+- **Frontend:**
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
-# timebird
+  - [Next.js 15](https://nextjs.org/): React framework for building performant and scalable web applications with a focus on user experience.
+  - [shadcn/ui](https://ui.shadcn.com/): Beautifully designed and reusable components for Next.js, leveraging Radix UI and Tailwind CSS for a consistent and polished interface.
+  - [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework enabling rapid and customizable UI development with streamlined styling.
+
+- **Backend:**
+  - [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction): Enables the creation of serverless functions for handling API requests, ensuring optimal performance.
+  - [Prisma](https://www.prisma.io/): A type-safe ORM facilitating seamless and efficient database interactions, promoting data integrity and developer productivity.
+  - [PostgreSQL](https://www.postgresql.org/): A robust and reliable open-source relational database, ensuring secure and scalable data storage.
+  - [NextAuth.js](https://next-auth.js.org/) or similar: A comprehensive authentication library ensuring the secure management of user accounts and sessions.
+
+## Contributing
+
+We welcome contributions to TimeBird! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting a pull request.
