@@ -1,3 +1,5 @@
+import { FloatingDockComp } from "./floating";
+
 export default function Footer() {
   return (
     <footer className="bg-transparent  lg:grid lg:grid-cols-5">
@@ -26,7 +28,7 @@ export default function Footer() {
               </a>
             </p>
 
-            <ul className="mt-8 flex gap-6 text-black dark:text-white">
+            {/* <ul className="mt-8 flex gap-6 text-black dark:text-white">
               <li>
                 <a
                   href="#"
@@ -142,7 +144,8 @@ export default function Footer() {
                   </svg>
                 </a>
               </li>
-            </ul>
+            </ul> */}
+            <FloatingDockComp />
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-black dark:text-white">
