@@ -23,6 +23,8 @@ model User {
   Hours         Hours[]
   PayRate       PayRate[]
 
+  stripeCustomerId String?
+
   @@unique([email])
   @@map("user")
 }
@@ -73,14 +75,16 @@ model Verification {
 }
 
 model Hours {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   userId     String
   department String
   date       DateTime
   hours      Decimal
+  startTime  DateTime?
+  endTime    DateTime?
   isOvertime Boolean
   overtime   Decimal
-  user       User     @relation(fields: [userId], references: [id])
+  user       User      @relation(fields: [userId], references: [id])
 }
 
 model PayRate {

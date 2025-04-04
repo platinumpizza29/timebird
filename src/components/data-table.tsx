@@ -30,6 +30,9 @@ export async function DataTable() {
       },
     },
     take: 10,
+    orderBy: {
+      date: "desc",
+    },
   });
 
   return (

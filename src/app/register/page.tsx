@@ -23,7 +23,6 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const router = useRouter();
@@ -146,7 +145,7 @@ export default function RegisterPage() {
                       toast.error(ctx.error.message);
                     },
                     onSuccess: async (ctx) => {
-                      const userId: User = await ctx.data.user as User
+                      const userId: User = (await ctx.data.user) as User;
                       router.push(`/dashboard/${userId.id}`);
                     },
                   },

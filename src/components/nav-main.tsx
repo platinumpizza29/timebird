@@ -1,30 +1,30 @@
-"use client"
+"use client";
 
-import { IconCirclePlusFilled, IconMail, type Icon } from "@tabler/icons-react"
-import { useRouter } from "next/navigation"
+import { IconCirclePlusFilled, IconMail, type Icon } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
-import { Button } from "~/components/ui/button"
+import { Button } from "~/components/ui/button";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "~/components/ui/sidebar"
-import { useSession } from "~/lib/auth-client"
+} from "~/components/ui/sidebar";
+import { useSession } from "~/lib/auth-client";
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon?: Icon
-  }[]
+    title: string;
+    url: string;
+    icon?: Icon;
+  }[];
 }) {
-  const router = useRouter()
-  const userData = useSession()
-  const userId = userData.data?.session.userId
+  const router = useRouter();
+  const userData = useSession();
+  const userId = userData.data?.session.userId;
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -51,7 +51,11 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
+              <SidebarMenuButton
+                className="hover:bg-gray-200"
+                tooltip={item.title}
+                onClick={() => router.push(item.url)}
+              >
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
               </SidebarMenuButton>
@@ -60,5 +64,5 @@ export function NavMain({
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }
