@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   IconCalendar,
   IconDashboard,
@@ -8,11 +8,11 @@ import {
   IconHelp,
   IconSearch,
   IconSettings,
-} from "@tabler/icons-react"
+} from "@tabler/icons-react";
 
-import { NavMain } from "~/components/nav-main"
-import { NavSecondary } from "~/components/nav-secondary"
-import { NavUser } from "~/components/nav-user"
+import { NavMain } from "~/components/nav-main";
+import { NavSecondary } from "~/components/nav-secondary";
+import { NavUser } from "~/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -21,12 +21,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "~/components/ui/sidebar"
-import { useSession } from "~/lib/auth-client"
+} from "~/components/ui/sidebar";
+import { useSession } from "~/lib/auth-client";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
-  const userSession = useSession()
+  const userSession = useSession();
   const user = userSession.data?.user;
 
   const data = {
@@ -43,7 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         title: "My Rota",
-        url: "#",
+        url: `/dashboard/${user?.id}/myrota`,
         icon: IconCalendar,
       },
     ],
@@ -64,8 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: IconSearch,
       },
     ],
-  }
-
+  };
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -92,5 +90,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
