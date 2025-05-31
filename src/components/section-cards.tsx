@@ -1,27 +1,46 @@
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
 import { headers } from "next/headers";
-
-import { Badge } from "~/components/ui/badge";
 import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  subWeeks,
+} from "date-fns";
+import { RevenueCard } from "~/components/revenue-card";
 import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
+import { HoursCard } from "./hours-card";
 
 export async function SectionCards() {
   const userData = await auth.api.getSession({
     headers: await headers(),
   });
   const userId = userData?.session.userId;
-  //fetch the data from prisma
+
+  // Get the current date
+  const now = new Date();
+
+  // Calculate date ranges for different periods
+  const weeklyStart = startOfWeek(now);
+  const weeklyEnd = endOfWeek(now);
+
+  const biWeeklyStart = subWeeks(startOfWeek(now), 1);
+  const biWeeklyEnd = endOfWeek(now);
+
+  const monthlyStart = startOfMonth(now);
+  const monthlyEnd = endOfMonth(now);
+
+  const fourWeeklyStart = subWeeks(startOfWeek(now), 3);
+  const fourWeeklyEnd = endOfWeek(now);
+
+  // Fetch hours for all periods
   const hours = await db.hours.findMany({
     where: {
       userId: userId,
+      date: {
+        gte: fourWeeklyStart,
+        lte: fourWeeklyEnd,
+      },
     },
     include: {
       user: {
@@ -31,96 +50,71 @@ export async function SectionCards() {
       },
     },
   });
-  // get the total hours for just this month
-  const totalHours = hours.reduce((acc, hour) => {
-    return acc + parseFloat(hour.hours.toString());
-  }, 0);
 
-  // get the total overtime for just this month
-  const totalOvertime = hours.reduce((acc, hour) => {
-    return acc + parseFloat(hour.overtime.toString());
-  }, 0);
+  // Calculate revenue for different periods
+  const calculateRevenue = (startDate: Date, endDate: Date) => {
+    const periodHours = hours.filter(
+      (hour) => hour.date >= startDate && hour.date <= endDate
+    );
 
-  // get the total revenue for just this month hours+overtime * payrate
-  const totalRevenue = hours
-    .reduce((acc, hour) => {
-      return (
-        acc +
-        parseFloat(hour.hours.toString()) *
-          parseFloat(hour.user.PayRate[0]?.rate.toString() ?? "0")
-      );
-    }, 0)
-    .toFixed(3);
+    const regularHours = periodHours.reduce((acc, hour) => {
+      return acc + parseFloat(hour.hours.toString());
+    }, 0);
+
+    const overtimeHours = periodHours.reduce((acc, hour) => {
+      return acc + parseFloat(hour.overtime.toString());
+    }, 0);
+
+    const baseRate = parseFloat(
+      periodHours[0]?.user.PayRate.find(
+        (rate) => rate.type === "BASE"
+      )?.rate.toString() ?? "0"
+    );
+    const overtimeRate = parseFloat(
+      periodHours[0]?.user.PayRate.find(
+        (rate) => rate.type === "WEEKDAY_OVERTIME"
+      )?.rate.toString() ?? "0"
+    );
+
+    const regularPay = regularHours * baseRate;
+    const overtimePay = overtimeHours * overtimeRate;
+
+    return {
+      totalRevenue: (regularPay + overtimePay).toFixed(2),
+      regularHours,
+      overtimeHours,
+    };
+  };
+
+  const weeklyRevenue = calculateRevenue(weeklyStart, weeklyEnd);
+  const biWeeklyRevenue = calculateRevenue(biWeeklyStart, biWeeklyEnd);
+  const monthlyRevenue = calculateRevenue(monthlyStart, monthlyEnd);
+  const fourWeeklyRevenue = calculateRevenue(fourWeeklyStart, fourWeeklyEnd);
 
   return (
-    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-3">
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            ${totalRevenue}
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <IconTrendingUp className="size-4" />
-          </div>
-          <div className="text-muted-foreground">
-            Total revenue for this month
-          </div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Total Hours</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {totalHours}
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingDown />
-              -20%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this period <IconTrendingDown className="size-4" />
-          </div>
-          <div className="text-muted-foreground">
-            Total hours worked this month
-          </div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Total Overtime</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {totalOvertime}
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Overtime hours more/less
-            <IconTrendingUp className="size-4" />
-          </div>
-          <div className="text-muted-foreground">
-            Overtime hours as per user logged{" "}
-          </div>
-        </CardFooter>
-      </Card>
+    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-3">
+      <RevenueCard
+        weeklyRevenue={weeklyRevenue}
+        biWeeklyRevenue={biWeeklyRevenue}
+        monthlyRevenue={monthlyRevenue}
+        fourWeeklyRevenue={fourWeeklyRevenue}
+      />
+      <HoursCard
+        title="Base Hours"
+        weeklyHours={weeklyRevenue.regularHours}
+        biWeeklyHours={biWeeklyRevenue.regularHours}
+        monthlyHours={monthlyRevenue.regularHours}
+        fourWeeklyHours={fourWeeklyRevenue.regularHours}
+        description="Regular working hours"
+      />
+      <HoursCard
+        title="Overtime Hours"
+        weeklyHours={weeklyRevenue.overtimeHours}
+        biWeeklyHours={biWeeklyRevenue.overtimeHours}
+        monthlyHours={monthlyRevenue.overtimeHours}
+        fourWeeklyHours={fourWeeklyRevenue.overtimeHours}
+        description="Additional overtime hours"
+      />
     </div>
   );
 }
