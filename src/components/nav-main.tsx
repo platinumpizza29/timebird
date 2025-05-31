@@ -52,7 +52,7 @@ export function NavMain({
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
-                className="hover:bg-gray-200"
+                className="hover:bg-secondary"
                 tooltip={item.title}
                 onClick={() => router.push(item.url)}
               >

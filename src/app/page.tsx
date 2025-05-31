@@ -1,17 +1,17 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Navbar from "~/components/navbar";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { useSession } from "~/lib/auth-client";
 import { FeaturesSection } from "~/components/landing/features";
 import Footer from "~/components/landing/footer";
+import { useSession } from "~/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
-  const sessionData = useSession();
-  const userId = sessionData?.data?.user.id;
-
+  const userSession = useSession();
   const router = useRouter();
+
+  const userId = userSession.data?.user.id;
 
   if (userId) {
     router.push(`/dashboard/${userId}`);
